@@ -6,10 +6,10 @@ import {
   Navigate
 } from 'react-router-dom';
 
-import Login         from './components/Login';
-import ReceitaList   from './components/ReceitaList';
-import ReceitaForm   from './components/ReceitaForm';
-import ReceitaDetail from './components/ReceitaDetail';
+import Login          from './components/Login';
+import ReceitaList    from './components/ReceitaList';
+import ReceitaForm    from './components/ReceitaForm';
+import ReceitaDetail  from './components/ReceitaDetail';
 
 function PrivateRoute({ children }) {
   const token = localStorage.getItem('token');
@@ -26,10 +26,41 @@ export default function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
 
-          <Route path="/" element={<PrivateRoute><ReceitaList /></PrivateRoute>} />
-          <Route path="/adicionar" element={<PrivateRoute><ReceitaForm /></PrivateRoute>} />
-          <Route path="/editar/:id" element={<PrivateRoute><ReceitaForm /></PrivateRoute>} />
-          <Route path="/detalhes/:id" element={<PrivateRoute><ReceitaDetail /></PrivateRoute>} />
+          <Route
+            path="/"
+            element={
+              <PrivateRoute>
+                <ReceitaList />
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/adicionar"
+            element={
+              <PrivateRoute>
+                <ReceitaForm />
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/editar/:id"
+            element={
+              <PrivateRoute>
+                <ReceitaForm />
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/detalhes/:id"
+            element={
+              <PrivateRoute>
+                <ReceitaDetail />
+              </PrivateRoute>
+            }
+          />
         </Routes>
       </div>
     </Router>

@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	"os" // Certifique-se que 'os' está importado!
 
 	"github.com/Bruno-Fagundes/crud-receitas-culinarias/config"
 	_ "github.com/Bruno-Fagundes/crud-receitas-culinarias/docs"
@@ -23,6 +24,10 @@ func main() {
 		log.Fatal("Erro ao carregar .env")
 	}
 
+	// *** ADICIONE ESTA LINHA AQUI ***
+	log.Println("DEBUG: JWT_SECRET carregado no backend:", os.Getenv("JWT_SECRET"))
+	// ******************************
+
 	db := config.SetupDB()
 	defer db.Close()
 	if _, err := db.Exec(models.CreateTableQuery); err != nil {
@@ -40,13 +45,14 @@ func main() {
 	api := router.PathPrefix("/api").Subrouter()
 	api.Use(middleware.JWTMiddleware)
 	api.HandleFunc("/receitas", receitaHandler.ReadReceitas).Methods("GET")
+	api.HandleFunc("/receitas/{id}", receitaHandler.ReadReceitasById).Methods("GET")
 	api.HandleFunc("/receitas", receitaHandler.CreateReceitas).Methods("POST")
 	api.HandleFunc("/receitas/{id}", receitaHandler.DeleteReceitas).Methods("DELETE")
 	api.HandleFunc("/receitas/{id}", receitaHandler.UpdateReceitas).Methods("PUT")
 
 	// Configurações de CORS
 	c := cors.New(cors.Options{
-		AllowedOrigins:   []string{"http://localhost:5174"},
+		AllowedOrigins:   []string{"http://localhost:5173"},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders:   []string{"Content-Type", "Authorization"},
 		AllowCredentials: true,
@@ -54,6 +60,6 @@ func main() {
 
 	handlerWithCORS := c.Handler(router)
 
-	log.Println("Servidor rodando em http://localhost:8081")
-	log.Fatal(http.ListenAndServe(":8081", handlerWithCORS))
+	log.Println("Servidor rodando em http://localhost:5555")
+	log.Fatal(http.ListenAndServe(":5555", handlerWithCORS))
 }

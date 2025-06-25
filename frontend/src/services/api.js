@@ -1,7 +1,8 @@
+// frontend/src/services/api.js
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'http://localhost:8081/api',
+  baseURL: 'http://localhost:5555/api',
 });
 
 // Adiciona o token antes de cada requisição
@@ -41,7 +42,11 @@ export default {
 
   // Para login com endpoint que não exige token
   login: async (username, password) => {
-    const res = await axios.post('http://localhost:8081/login', { username, password });
+    const res = await axios.post('http://localhost:5555/login', { username, password });
     return res.data;
   },
+  // Esta função precisa estar aqui para ser exportada pelo módulo api.js
+  isAuthenticated: () => {
+    return localStorage.getItem('token') !== null;
+  }
 };
