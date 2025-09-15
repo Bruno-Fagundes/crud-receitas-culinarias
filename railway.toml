@@ -1,5 +1,4 @@
 [build]
-# Diretório onde está o package.json do backend
 root = "backend"
 command = "npm install"
 
