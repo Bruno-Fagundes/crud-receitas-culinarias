@@ -7,5 +7,5 @@ root = "backend"
 command = "./app"
 
 [variables]
-GO_ENV = "production"
 PORT = "8080"
+GO_ENV = "production"
