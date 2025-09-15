@@ -59,7 +59,12 @@ func main() {
 	})
 
 	handlerWithCORS := c.Handler(router)
+port := os.Getenv("PORT")
+if port == "" {
+    port = "5555" // valor de fallback local
+}
 
-	log.Println("Servidor rodando em http://localhost:5555")
-	log.Fatal(http.ListenAndServe(":5555", handlerWithCORS))
+log.Printf("Servidor rodando em http://0.0.0.0:%s", port)
+log.Fatal(http.ListenAndServe(":"+port, handlerWithCORS))
+
 }
