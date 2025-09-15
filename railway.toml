@@ -1,5 +1,6 @@
 [build]
 root = "backend"
+builder = "go"
 command = "go build -o app ."
 
 [start]
