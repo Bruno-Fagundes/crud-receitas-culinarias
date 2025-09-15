@@ -1,10 +1,11 @@
 [build]
 root = "backend"
-command = "npm install"
+command = "go build -o app ."
 
 [start]
 root = "backend"
-command = "npm start"
+command = "./app"
 
 [variables]
-NODE_ENV = "production"
+GO_ENV = "production"
+PORT = "8080"
